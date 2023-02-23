@@ -1,18 +1,27 @@
 <script setup>
 import { ref, computed } from 'vue';
+import { format, subMinutes } from 'date-fns';
 
 const food = ref('');
 const stage = ref(0);
 const wakeUpTime = ref('07:00');
 
-const time = computed(() => {
+const requiredMinutes = computed(() => {
   if (/cereal/i.test(food.value)) return 2;
   if (/oatmeal/i.test(food.value)) return 45;
   if (/pancake/i.test(food.value)) return 25;
   return 5;
 });
 
-const alarmTime = computed(() => '06:00am');
+const alarmTime = computed(() => {
+  const [hours, minutes] = wakeUpTime.value.split(':');
+  const date1 = new Date();
+  date1.setHours(Number(hours));
+  date1.setMinutes(Number(minutes));
+
+  const date2 = subMinutes(date1, requiredMinutes.value);
+  return format(date2, 'h:mm a');
+});
 </script>
 
 <template>
@@ -33,7 +42,7 @@ const alarmTime = computed(() => '06:00am');
         <div v-if="stage >= 1" class="flex flex-col">
           <p class="mt-10">
             I think it will take
-            <span class="font-bold">{{ time }}</span>
+            <span class="font-bold">{{ requiredMinutes }}</span>
             minutes to prepare your
             <span class="font-bold">{{ food }}</span
             >. What time would you like to be ready by in the morning?
