@@ -1,9 +1,9 @@
 <script setup>
-import { ref, watch, computed, onMounted, nextTick } from 'vue';
+import { ref, watch, computed, nextTick } from 'vue';
 import { format, subMinutes } from 'date-fns';
 
 const food = ref('');
-const stage = ref(1);
+const stage = ref(0);
 const wakeUpTime = ref('07:00');
 
 const requiredMinutes = computed(() => {
@@ -33,26 +33,31 @@ watch(
   () => stage.value,
   (newVal) => nextTick(() => sayParagraph(newVal))
 );
-
-onMounted(() => {
-  sayParagraph(1);
-});
 </script>
 
 <template>
   <div class="h-[100vh] flex bg-pink-100">
     <div class="m-auto mt-32 max-w-md text-center">
-      <form @submit.prevent="stage = 2">
-        <p id="p1" class="text-2xl">
-          Hello! What would you like to eat tomorrow morning?
-        </p>
-        <input
-          v-model="food"
-          type="text"
-          class="rounded w-full mt-8"
-          autofocus
-        />
-      </form>
+      <button
+        v-if="stage === 0"
+        class="border-green-900 border-2 bg-green-300 py-4 px-6 rounded-xl hover:bg-green-400 transition-colors"
+        @click="stage = 1"
+      >
+        Start C.A.R.R.Y.
+      </button>
+      <Transition name="app-fade">
+        <form v-if="stage >= 1" @submit.prevent="stage = 2">
+          <p id="p1" class="text-2xl">
+            Hello! What would you like to eat tomorrow morning?
+          </p>
+          <input
+            v-model="food"
+            type="text"
+            class="rounded w-full mt-8"
+            autofocus
+          />
+        </form>
+      </Transition>
       <Transition name="app-fade">
         <div v-if="stage >= 2" class="flex flex-col">
           <p id="p2" class="mt-10">
