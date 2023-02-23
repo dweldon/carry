@@ -9,9 +9,9 @@ const wakeUpTime = ref('07:00');
 const requiredMinutes = computed(() => {
   if (/egg/i.test(food.value)) return 10;
   if (/bagel/i.test(food.value)) return 5;
+  if (/french/i.test(food.value)) return 15;
   if (/toast/i.test(food.value)) return 5;
   if (/cereal/i.test(food.value)) return 2;
-  if (/french/i.test(food.value)) return 15;
   if (/bacon/i.test(food.value)) return 8;
   if (/waffle/i.test(food.value)) return 5;
   if (/pancake/i.test(food.value)) return 25;
