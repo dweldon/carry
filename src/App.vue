@@ -1,9 +1,9 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, watch, computed, onMounted, nextTick } from 'vue';
 import { format, subMinutes } from 'date-fns';
 
 const food = ref('');
-const stage = ref(0);
+const stage = ref(1);
 const wakeUpTime = ref('07:00');
 
 const requiredMinutes = computed(() => {
@@ -22,13 +22,28 @@ const alarmTime = computed(() => {
   const date2 = subMinutes(date1, requiredMinutes.value);
   return format(date2, 'h:mm a');
 });
+
+const sayParagraph = (id) => {
+  const el = document.getElementById(`p${id}`);
+  const msg = new SpeechSynthesisUtterance(el.textContent);
+  window.speechSynthesis.speak(msg);
+};
+
+watch(
+  () => stage.value,
+  (newVal) => nextTick(() => sayParagraph(newVal))
+);
+
+onMounted(() => {
+  sayParagraph(1);
+});
 </script>
 
 <template>
   <div class="h-[100vh] flex bg-pink-100">
     <div class="m-auto mt-32 max-w-md text-center">
-      <form @submit.prevent="stage = 1">
-        <p class="text-2xl">
+      <form @submit.prevent="stage = 2">
+        <p id="p1" class="text-2xl">
           Hello! What would you like to eat tomorrow morning?
         </p>
         <input
@@ -39,8 +54,8 @@ const alarmTime = computed(() => {
         />
       </form>
       <Transition name="app-fade">
-        <div v-if="stage >= 1" class="flex flex-col">
-          <p class="mt-10">
+        <div v-if="stage >= 2" class="flex flex-col">
+          <p id="p2" class="mt-10">
             I think it will take
             <span class="font-bold">{{ requiredMinutes }}</span>
             minutes to prepare your
@@ -55,7 +70,7 @@ const alarmTime = computed(() => {
             />
             <button
               class="bg-blue-400 w-12 hover:bg-blue-500 transition-colors border-y border-r border-blue-500 rounded-tr rounded-br"
-              @click="stage = 2"
+              @click="stage = 3"
             >
               OK
             </button>
@@ -63,8 +78,8 @@ const alarmTime = computed(() => {
         </div>
       </Transition>
       <Transition name="app-fade">
-        <div v-if="stage >= 2" class="flex flex-col">
-          <p class="mt-10">
+        <div v-if="stage >= 3" class="flex flex-col">
+          <p id="p3" class="mt-10">
             Got it! I'll set your alarm for
             <span class="font-bold">{{ alarmTime }}</span>
             tomorrow, so you can eat your
