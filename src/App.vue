@@ -45,7 +45,7 @@ const image = 'goat.png';
     <div class="m-auto mt-32 max-w-md text-center">
       <button
         v-if="stage === 0"
-        class="border-green-900 border-2 bg-green-300 py-4 px-6 rounded-xl hover:bg-green-400 transition-colors"
+        class="ring-indigo-900 ring-4 bg-indigo-200 py-4 px-6 rounded-xl hover:bg-indigo-400 transition-colors"
         @click="stage = 1"
       >
         Start C.A.R.R.Y.
@@ -79,7 +79,7 @@ const image = 'goat.png';
               class="rounded-tl rounded-bl"
             />
             <button
-              class="bg-blue-400 w-12 hover:bg-blue-500 transition-colors border-y border-r border-blue-500 rounded-tr rounded-br"
+              class="bg-indigo-400 w-12 hover:bg-indigo-500 transition-colors border-y border-r border-indigo-500 rounded-tr rounded-br"
               @click="stage = 3"
             >
               OK
