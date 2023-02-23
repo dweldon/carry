@@ -33,10 +33,15 @@ watch(
   () => stage.value,
   (newVal) => nextTick(() => sayParagraph(newVal))
 );
+
+const image = 'goat.png';
 </script>
 
 <template>
-  <div class="h-[100vh] flex bg-pink-100">
+  <div
+    class="h-[100vh] flex bg-pink-50 bg-no-repeat bg-left-bottom"
+    :style="{ backgroundImage: 'url(' + image + ')' }"
+  >
     <div class="m-auto mt-32 max-w-md text-center">
       <button
         v-if="stage === 0"
