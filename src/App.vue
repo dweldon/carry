@@ -13,7 +13,7 @@ const requiredMinutes = computed(() => {
   if (/cereal/i.test(food.value)) return 2;
   if (/french/i.test(food.value)) return 15;
   if (/bacon/i.test(food.value)) return 8;
-  if (/waffles/i.test(food.value)) return 5;
+  if (/waffle/i.test(food.value)) return 5;
   if (/pancake/i.test(food.value)) return 25;
   if (/oatmeal/i.test(food.value)) return 10;
   return 15;
