@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Fade */
+.app-fade-enter-from,
+.app-fade-leave-to,
+.app-fade-fast-enter-from,
+.app-fade-fast-leave-to {
+  opacity: 0;
+}
+
+.app-fade-enter-active,
+.app-fade-leave-active {
+  transition: opacity 1s;
+}
